@@ -8,7 +8,6 @@ import logging
 import json
 import time
 from ckan.common import request
-from dag_status_report import DagStatusReport
 import ckan.logic as logic
 import ckan.lib.helpers as h
 
@@ -138,11 +137,3 @@ def aircan_submit(context, data_dict):
 
     if REACHED_RESOPONSE == True:
         return AIRCAN_RESPONSE_AFTER_SUBMIT
-
-def dag_status(context, data_dict):
-    dag_name = request.params.get('dag_name')
-    execution_date = request.params.get('execution_date', '')
-    dag_status_report = DagStatusReport(dag_name, execution_date, config)
-    if config.get('ckan.airflow.cloud','local') != "GCP":
-        return dag_status_report.get_local_aircan_report()
-    return dag_status_report.get_gcp_report()
