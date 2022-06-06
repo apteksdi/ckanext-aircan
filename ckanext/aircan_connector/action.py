@@ -7,7 +7,6 @@ from ckan.plugins.toolkit import get_action
 import logging
 import json
 import time
-import urlparse
 from ckan.common import request
 from gcp_handler import GCPHandler
 from dag_status_report import DagStatusReport
