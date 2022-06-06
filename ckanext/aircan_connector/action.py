@@ -8,7 +8,6 @@ import logging
 import json
 import time
 from ckan.common import request
-from gcp_handler import GCPHandler
 from dag_status_report import DagStatusReport
 import ckan.logic as logic
 import ckan.lib.helpers as h
