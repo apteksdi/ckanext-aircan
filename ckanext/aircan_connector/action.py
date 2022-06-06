@@ -129,13 +129,7 @@ def aircan_submit(context, data_dict):
             log.info('AirCan Load completed')
             
             AIRCAN_RESPONSE_AFTER_SUBMIT = {"aircan_status": response.json()}
-        else:
-            log.info("Invoking Airflow on Google Cloud Composer")
-            dag_name = request.params.get('dag_name')
-            if dag_name:
-                config['ckan.airflow.cloud.dag_name'] = dag_name
-            gcp_response = invoke_gcp(config, payload)
-            AIRCAN_RESPONSE_AFTER_SUBMIT = {"aircan_status": gcp_response}
+       
     except ValueError:
         log.error(NO_SCHEMA_ERROR_MESSAGE)
         h.flash_error(NO_SCHEMA_ERROR_MESSAGE.format(ckan_resource_url , ckan_resource_name),  allow_html=True)
@@ -144,13 +138,6 @@ def aircan_submit(context, data_dict):
 
     if REACHED_RESOPONSE == True:
         return AIRCAN_RESPONSE_AFTER_SUBMIT
-
-def invoke_gcp(config, payload):
-    log.info('Invoking GCP')
-    gcp = GCPHandler(config, payload)
-    log.info('Handler created')
-    return gcp.trigger_dag()
-
 
 def dag_status(context, data_dict):
     dag_name = request.params.get('dag_name')
